@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-import CacheResponse from '../interfaces/response';
+import Cache from '../interfaces/cache';
 
-const cache = new Map<string, CacheResponse>();
+const cache = new Map<string, Cache>();
 
-const getCache = (key: string): CacheResponse => {
+const getCache = (key: string): Cache => {
   return cache.get(key);
 };
 
-const setCache = (key: string, value: CacheResponse): void => {
+const setCache = (key: string, value: Cache): void => {
   cache.set(key, value);
 };
 

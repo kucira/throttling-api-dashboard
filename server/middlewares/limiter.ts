@@ -16,9 +16,36 @@ const deleteLimit = (IP): void => {
 };
 
 const handleLimiter = (req: Request, res: Response, next: NextFunction) => {
+  const REQUEST_LIMIT_MS: number = parseInt(process.env.API_LIMIT_MS, 10);
+  const REQUEST_LIMIT = parseInt(process.env.API_REQUEST_LIMIT, 10);
+  const MESSAGES = process.env.MESSAGE;
+
   const IP: string = req.header('x-forwarded-for') || req.socket.remoteAddress;
-  getLimit(IP);
-  // setLimit(IP, { request});
+  const limit = getLimit(IP);
+
+  //no limit data for current IP
+  if (!limit) {
+    setLimit(IP, { request: 1, ttl: Date.now() + REQUEST_LIMIT_MS });
+    return next();
+  }
+
+  // limit data exist for ip & limit ttl already pass request limit time
+  // means new limit data
+  if (limit && limit.ttl < Date.now()) {
+    setLimit(IP, { request: 1, ttl: Date.now() + REQUEST_LIMIT_MS });
+    return next();
+  }
+
+  if (limit.request >= REQUEST_LIMIT) {
+    return res.status(429).json({
+      message: MESSAGES,
+    });
+  }
+
+  // add request counter, set the limit
+  // and next task
+  limit.request = limit.request + 1;
+  setLimit(IP, { ...limit, request: limit.request });
   next();
 };
 

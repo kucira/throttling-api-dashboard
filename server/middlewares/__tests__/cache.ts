@@ -1,8 +1,8 @@
 import { getCache, deleteCache, setCache } from '../cache';
-import CacheResponse from '../../interfaces/response';
+import Cache from '../../interfaces/cache';
 
 describe('cache unit function', () => {
-  const res: CacheResponse = { date: Date.now(), message: 'success' };
+  const res: Cache = { date: Date.now(), message: 'success' };
   it('set cache data with key `home` as json data', () => {
     setCache('home', res);
     const cache = getCache('home');

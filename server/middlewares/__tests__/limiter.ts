@@ -29,8 +29,15 @@ describe('limiter unit function', () => {
     expect(cache).toBeFalsy();
   });
 
-  it('handle limit when request should return endpoint /', async () => {
+  it('first call api should return 200', async () => {
     const res = await request(server).get('/');
     expect(res.statusCode).toEqual(200);
+  });
+
+  it('more than request limit, should return 429', async () => {
+    await request(server).get('/');
+    await request(server).get('/');
+    const res = await request(server).get('/');
+    expect(res.statusCode).toEqual(429);
   });
 });

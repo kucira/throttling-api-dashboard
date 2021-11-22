@@ -36,10 +36,15 @@ describe('limiter unit function', () => {
         const cache = (0, limiter_1.getLimit)(IP);
         expect(cache).toBeFalsy();
     });
-    it('handle limit when request should return endpoint /', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('first call api should return 200', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield (0, supertest_1.default)(index_1.default).get('/');
-        console.log(res);
         expect(res.statusCode).toEqual(200);
+    }));
+    it('more than request limit, should return 429', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, supertest_1.default)(index_1.default).get('/');
+        yield (0, supertest_1.default)(index_1.default).get('/');
+        const res = yield (0, supertest_1.default)(index_1.default).get('/');
+        expect(res.statusCode).toEqual(429);
     }));
 });
 //# sourceMappingURL=limiter.js.map
