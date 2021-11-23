@@ -1,12 +1,14 @@
+import supertest from 'supertest';
+
 import Limit from '../../interfaces/limit';
 import { deleteLimit, getLimit, setLimit } from '../limiter';
-
-import request from 'supertest';
-import server from '../../index';
+import app from '../../app';
 
 describe('limiter unit function', () => {
   const IP = '192.168.0.1;';
   const value: Limit = { request: 1, ttl: Date.now() };
+  const request = supertest(app);
+
   it('set limiter data with ip address', () => {
     setLimit(IP, value);
     const limit = getLimit(IP);
@@ -30,14 +32,11 @@ describe('limiter unit function', () => {
   });
 
   it('first call api should return 200', async () => {
-    const res = await request(server).get('/');
-    expect(res.statusCode).toEqual(200);
+    await request.get('/').expect(200);
   });
 
   it('more than request limit, should return 429', async () => {
-    await request(server).get('/');
-    await request(server).get('/');
-    const res = await request(server).get('/');
-    expect(res.statusCode).toEqual(429);
+    await request.get('/').expect(200);
+    await request.get('/').expect(429);
   });
 });

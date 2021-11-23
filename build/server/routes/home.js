@@ -4,9 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const limiter_1 = require("../middlewares/limiter");
 const Home = express_1.default.Router();
-Home.get('/', limiter_1.handleLimiter, (req, res) => res.status(200).json({
+Home.get('/', (req, res) => res.status(200).json({
+    message: 'Success',
+}));
+Home.get('/init', (req, res) => res.status(200).json({
     data: [
         {
             id: '123445',

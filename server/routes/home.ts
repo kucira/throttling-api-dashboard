@@ -1,8 +1,13 @@
 import express, { Router, Request, Response } from 'express';
-import { handleLimiter } from '../middlewares/limiter';
 
 const Home: Router = express.Router();
-Home.get('/', handleLimiter, (req: Request, res: Response) =>
+Home.get('/', (req: Request, res: Response) =>
+  res.status(200).json({
+    message: 'Success',
+  }),
+);
+
+Home.get('/init', (req: Request, res: Response) =>
   res.status(200).json({
     data: [
       {
