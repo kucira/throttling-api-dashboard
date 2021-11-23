@@ -36,7 +36,15 @@ describe('limiter unit function', () => {
   });
 
   it('more than request limit, should return 429', async () => {
-    await request.get('/').expect(200);
+    const REQUEST_LIMIT: number = parseInt(process.env.API_REQUEST_LIMIT, 10);
+    const a = Array.from({ length: REQUEST_LIMIT - 1 }, () => {
+      return 0;
+    });
+    await Promise.all(
+      a.map(async () => {
+        return await request.get('/').expect(200);
+      }),
+    );
     await request.get('/').expect(429);
   });
 });
