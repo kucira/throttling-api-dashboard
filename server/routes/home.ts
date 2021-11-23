@@ -12,8 +12,20 @@ Home.get('/init', (req: Request, res: Response) =>
     data: [
       {
         id: '123445',
-        name: 'hello world',
-        address: 'Boom',
+        date: new Date().toISOString(),
+      },
+    ],
+    message: 'Success',
+  }),
+);
+
+Home.get('/users', (req: Request, res: Response) =>
+  res.status(200).json({
+    data: [
+      {
+        id: '123445',
+        name: 'Joko',
+        address: 'Kalimantan',
       },
     ],
     message: 'Success',

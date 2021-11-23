@@ -38,7 +38,7 @@ const handleLimiter = (req: Request, res: Response, next: NextFunction) => {
 
   if (limit.request >= REQUEST_LIMIT) {
     return res.status(429).json({
-      message: MESSAGES,
+      error: MESSAGES,
     });
   }
 

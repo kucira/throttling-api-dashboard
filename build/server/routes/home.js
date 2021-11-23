@@ -12,8 +12,17 @@ Home.get('/init', (req, res) => res.status(200).json({
     data: [
         {
             id: '123445',
-            name: 'hello world',
-            address: 'Boom',
+            date: new Date().toISOString(),
+        },
+    ],
+    message: 'Success',
+}));
+Home.get('/users', (req, res) => res.status(200).json({
+    data: [
+        {
+            id: '123445',
+            name: 'Joko',
+            address: 'Kalimantan',
         },
     ],
     message: 'Success',
