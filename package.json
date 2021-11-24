@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "NODE_ENV=development VERBOSE='1' nodemon index.ts",
     "start": "NODE_ENV=production nodemon index.ts",
-    "start:compile": "concurrently \"tsc -w\" \"nodemon build/server/index.js\"",
+    "start:compile": "tsc --project ./ && concurrently \"tsc -w\" \"nodemon build/server/index.js\"",
     "build": "tsc --project ./",
     "test:init": "ts-jest config:init",
-    "test:server": "NODE_ENV=test ENV_FILE=env.test jest --verbose ./server",
+    "test:server": "NODE_ENV=test jest --verbose ./server",
     "lint": "eslint *.ts",
     "format": "eslint *.ts --fix"
   },

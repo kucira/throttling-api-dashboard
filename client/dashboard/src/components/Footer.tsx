@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text } from 'rebass';
+import { Flex, Text } from 'rebass';
 
 interface FooterProps {
   content: string;
@@ -13,13 +13,9 @@ const Footer: React.FC<FooterProps> = (props: FooterProps) => {
         <Text p={2} fontWeight="bold">
           {content}
         </Text>
-        <Box mx="auto" />
-        {/* <Link variant="nav" href="#!" color="white">
-          Profile
-        </Link> */}
       </Flex>
     </footer>
   );
 };
 
-export default Footer;
+export default React.memo(Footer);

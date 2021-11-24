@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Container from '../components/Container';
 import FetchButton from '../components/FetchButton';
 
-interface StateResponse {
-  status: string;
-  response: null;
-}
+const FetchButtonMemo = React.memo(FetchButton);
 
 const fetchAPI = async (
   endpoint: string,
@@ -30,7 +27,7 @@ const fetchAPI = async (
     setState((prevState: any) => ({
       ...prevState,
       status: 'success',
-      response: JSON.stringify(res),
+      response: endpoint === '/init' ? res.data[0].date : `id: ${res.data[0].id}, name: ${res.data[0].name},   address:${res.data[0].address}`,
     }));
     return;
   }
@@ -42,7 +39,12 @@ const fetchAPI = async (
 };
 
 const Home: React.FC = () => {
-  const [state, setState] = useState({
+  const [stateOne, setStateOne] = useState({
+    status: 'init',
+    response: null,
+  });
+
+  const [stateTwo, setStateTwo] = useState({
     status: 'init',
     response: null,
   });
@@ -51,9 +53,21 @@ const Home: React.FC = () => {
     <>
       <Header title="Header" />
       <Container>
-        <FetchButton title="Fetch API '/init'" status={state.response || state.status} onClick={() => fetchAPI('/init', setState)} />
+        <FetchButtonMemo
+          title="Fetch API '/init'"
+          status={stateOne.response || stateOne.status}
+          onClick={useCallback(() => {
+            fetchAPI('/init', setStateOne);
+          }, [])}
+        />
         <hr />
-        <FetchButton title="Fetch API '/users'" status={state.response || state.status} onClick={() => fetchAPI('/users', setState)} />
+        <FetchButtonMemo
+          title="Fetch API '/users'"
+          status={stateTwo.response || stateTwo.status}
+          onClick={useCallback(() => {
+            fetchAPI('/users', setStateTwo);
+          }, [])}
+        />
         <hr />
       </Container>
       <Footer content={`${new Date().getFullYear()}`} />
