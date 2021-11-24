@@ -1,7 +1,7 @@
 ## Fullstack project nodejs & reactjs
 this project about throttling / rate limit api
-Backend as API
-Frontend as a simple client dashboard to test hit api
+# Backend as API
+# Frontend as a simple client dashboard to test hit api
 
 ### Tech stack
 1. Backend
