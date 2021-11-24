@@ -1,7 +1,7 @@
 # Fullstack project nodejs & reactjs
 this project about throttling / rate limit api
 ## Backend as API
-## Frontend as a simple client dashboard to test hit api
+##   Frontend as a simple client dashboard to test hit api
 
 ### Tech stack
 1. Backend
@@ -22,9 +22,10 @@ this project about throttling / rate limit api
 
 ### Installing Backend Project
 - Before install, create .env file at root folder
+- Node v12.22.0 or v14.17.0 or v16
 - follow the env.example
-- use pnpm install
-
+- use pnpm install (more information about pnpm https://pnpm.io/installation)
+- settings limit request and time limit request in milliseconds from .env
 ### Installing Frontend Project
 - Go to client/dashboard folder
 - Before install, create .env file at root folder
